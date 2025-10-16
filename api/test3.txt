@@ -1,0 +1,77 @@
+== Info: Rebuilt URL to: "method":"user.login"/
+== Info: Port number ended with '"'
+== Info: Closing connection -1
+== Info: Rebuilt URL to: "params":"user":"apizabbix"/
+== Info: Port number ended with '"'
+== Info: Closing connection -1
+== Info: Rebuilt URL to: "params":"TigoPanama2023$":"zabbix"/
+== Info: Port number ended with '"'
+== Info: Closing connection -1
+== Info: Rebuilt URL to: "auth":result/
+== Info: Port number ended with 'r'
+== Info: Closing connection -1
+== Info: Rebuilt URL to: "id":1/
+== Info: Could not resolve host: "id"
+== Info: Closing connection 0
+== Info:   Trying 172.20.6.42...
+== Info: TCP_NODELAY set
+== Info: Connected to 172.20.6.42 (172.20.6.42) port 80 (#1)
+=> Send header, 149 bytes (0x95)
+0000: 50 4f 53 54 20 2f 7a 61 62 62 69 78 2f 61 70 69 POST /zabbix/api
+0010: 5f 6a 73 6f 6e 72 70 63 2e 70 68 70 20 48 54 54 _jsonrpc.php HTT
+0020: 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 31 37 32 P/1.1..Host: 172
+0030: 2e 32 30 2e 36 2e 34 32 0d 0a 55 73 65 72 2d 41 .20.6.42..User-A
+0040: 67 65 6e 74 3a 20 63 75 72 6c 2f 37 2e 36 31 2e gent: curl/7.61.
+0050: 31 0d 0a 41 63 63 65 70 74 3a 20 2a 2f 2a 0d 0a 1..Accept: */*..
+0060: 43 6f 6e 74 65 6e 74 2d 54 79 70 65 3a 61 70 70 Content-Type:app
+0070: 6c 69 63 61 74 69 6f 6e 2f 6a 73 6f 6e 0d 0a 43 lication/json..C
+0080: 6f 6e 74 65 6e 74 2d 4c 65 6e 67 74 68 3a 20 31 ontent-Length: 1
+0090: 35 0d 0a 0d 0a                                  5....
+=> Send data, 15 bytes (0xf)
+0000: 22 6a 73 6f 6e 72 70 63 22 3a 22 32 2e 30 22    "jsonrpc":"2.0"
+== Info: upload completely sent off: 15 out of 15 bytes
+<= Recv header, 32 bytes (0x20)
+0000: 48 54 54 50 2f 31 2e 31 20 33 30 31 20 4d 6f 76 HTTP/1.1 301 Mov
+0010: 65 64 20 50 65 72 6d 61 6e 65 6e 74 6c 79 0d 0a ed Permanently..
+<= Recv header, 37 bytes (0x25)
+0000: 44 61 74 65 3a 20 4d 6f 6e 2c 20 30 39 20 4f 63 Date: Mon, 09 Oc
+0010: 74 20 32 30 32 33 20 31 35 3a 35 33 3a 34 31 20 t 2023 15:53:41 
+0020: 47 4d 54 0d 0a                                  GMT..
+<= Recv header, 65 bytes (0x41)
+0000: 53 65 72 76 65 72 3a 20 41 70 61 63 68 65 2f 32 Server: Apache/2
+0010: 2e 34 2e 33 37 20 28 52 65 64 20 48 61 74 20 45 .4.37 (Red Hat E
+0020: 6e 74 65 72 70 72 69 73 65 20 4c 69 6e 75 78 29 nterprise Linux)
+0030: 20 4f 70 65 6e 53 53 4c 2f 31 2e 31 2e 31 6b 0d  OpenSSL/1.1.1k.
+0040: 0a                                              .
+<= Recv header, 54 bytes (0x36)
+0000: 4c 6f 63 61 74 69 6f 6e 3a 20 68 74 74 70 73 3a Location: https:
+0010: 2f 2f 31 37 32 2e 32 30 2e 36 2e 34 32 2f 7a 61 //172.20.6.42/za
+0020: 62 62 69 78 2f 61 70 69 5f 6a 73 6f 6e 72 70 63 bbix/api_jsonrpc
+0030: 2e 70 68 70 0d 0a                               .php..
+<= Recv header, 21 bytes (0x15)
+0000: 43 6f 6e 74 65 6e 74 2d 4c 65 6e 67 74 68 3a 20 Content-Length: 
+0010: 32 35 30 0d 0a                                  250..
+<= Recv header, 45 bytes (0x2d)
+0000: 43 6f 6e 74 65 6e 74 2d 54 79 70 65 3a 20 74 65 Content-Type: te
+0010: 78 74 2f 68 74 6d 6c 3b 20 63 68 61 72 73 65 74 xt/html; charset
+0020: 3d 69 73 6f 2d 38 38 35 39 2d 31 0d 0a          =iso-8859-1..
+<= Recv header, 2 bytes (0x2)
+0000: 0d 0a                                           ..
+<= Recv data, 250 bytes (0xfa)
+0000: 3c 21 44 4f 43 54 59 50 45 20 48 54 4d 4c 20 50 <!DOCTYPE HTML P
+0010: 55 42 4c 49 43 20 22 2d 2f 2f 49 45 54 46 2f 2f UBLIC "-//IETF//
+0020: 44 54 44 20 48 54 4d 4c 20 32 2e 30 2f 2f 45 4e DTD HTML 2.0//EN
+0030: 22 3e 0a 3c 68 74 6d 6c 3e 3c 68 65 61 64 3e 0a ">.<html><head>.
+0040: 3c 74 69 74 6c 65 3e 33 30 31 20 4d 6f 76 65 64 <title>301 Moved
+0050: 20 50 65 72 6d 61 6e 65 6e 74 6c 79 3c 2f 74 69  Permanently</ti
+0060: 74 6c 65 3e 0a 3c 2f 68 65 61 64 3e 3c 62 6f 64 tle>.</head><bod
+0070: 79 3e 0a 3c 68 31 3e 4d 6f 76 65 64 20 50 65 72 y>.<h1>Moved Per
+0080: 6d 61 6e 65 6e 74 6c 79 3c 2f 68 31 3e 0a 3c 70 manently</h1>.<p
+0090: 3e 54 68 65 20 64 6f 63 75 6d 65 6e 74 20 68 61 >The document ha
+00a0: 73 20 6d 6f 76 65 64 20 3c 61 20 68 72 65 66 3d s moved <a href=
+00b0: 22 68 74 74 70 73 3a 2f 2f 31 37 32 2e 32 30 2e "https://172.20.
+00c0: 36 2e 34 32 2f 7a 61 62 62 69 78 2f 61 70 69 5f 6.42/zabbix/api_
+00d0: 6a 73 6f 6e 72 70 63 2e 70 68 70 22 3e 68 65 72 jsonrpc.php">her
+00e0: 65 3c 2f 61 3e 2e 3c 2f 70 3e 0a 3c 2f 62 6f 64 e</a>.</p>.</bod
+00f0: 79 3e 3c 2f 68 74 6d 6c 3e 0a                   y></html>.
+== Info: Connection #1 to host 172.20.6.42 left intact
