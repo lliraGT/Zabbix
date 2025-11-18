@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
+# notificaciones_automatizadas.py
+# Phone notification system with environment variables
 import socket
 import time
 import logging
 from datetime import datetime
 from typing import Dict, Optional
- 
+from config import Config
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -13,24 +16,27 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
-logger = logging.getLogger(__name__)
- 
- 
+logger = logging.getLogger(_name_)
+
+
 class NotificacionAutomatizada:
     
-    def __init__(self,
-                 asterisk_host: str,
-                 asterisk_port: int,
-                 ami_username: str,
-                 ami_password: str,
-                 caller_id_default: str = '23073500'):
-        self.asterisk_host = asterisk_host
-        self.asterisk_port = asterisk_port
-        self.ami_username = ami_username
-        self.ami_password = ami_password
-        self.caller_id_default = caller_id_default
+    def _init_(self,
+                 asterisk_host: str = None,
+                 asterisk_port: int = None,
+                 ami_username: str = None,
+                 ami_password: str = None,
+                 caller_id_default: str = None):
         
-        logger.info("Sistema inicializado - Asterisk: {}:{}".format(asterisk_host, asterisk_port))
+        # Usar valores de Config si no se proporcionan
+        self.asterisk_host = asterisk_host or Config.ASTERISK_HOST
+        self.asterisk_port = asterisk_port or Config.ASTERISK_PORT
+        self.ami_username = ami_username or Config.ASTERISK_AMI_USERNAME
+        self.ami_password = ami_password or Config.ASTERISK_AMI_PASSWORD
+        self.caller_id_default = caller_id_default or Config.ASTERISK_CALLER_ID
+        
+        logger.info("Sistema inicializado - Asterisk: {}:{}".format(
+            self.asterisk_host, self.asterisk_port))
     
     def _conectar_ami(self) -> Optional[socket.socket]:
         try:
@@ -182,31 +188,22 @@ class NotificacionAutomatizada:
                     sock.close()
                 except:
                     pass
- 
- 
-ASTERISK_CONFIG = {
-    'host': '172.22.57.75',
-    'port': 5038,
-    'username': 'api_user',
-    'password': 'T!G0_T00lsGT#9012',
-    'caller_id': '23073500'
-}
- 
+
+
+# Mensajes de audio disponibles
 MENSAJES_AUDIO = {
     'bienvenida': 'demo-congrats',
     'recordatorio': 'hello-world',
     'urgente': 'demo-congrats',
 }
- 
- 
+
+
 def enviar_notificacion_simple(numero: str, mensaje: str = 'bienvenida') -> Dict:
-    sistema = NotificacionAutomatizada(
-        asterisk_host=ASTERISK_CONFIG['host'],
-        asterisk_port=ASTERISK_CONFIG['port'],
-        ami_username=ASTERISK_CONFIG['username'],
-        ami_password=ASTERISK_CONFIG['password'],
-        caller_id_default=ASTERISK_CONFIG['caller_id']
-    )
+    """
+    Función simplificada para enviar notificación
+    Usa configuración desde Config (variables de entorno)
+    """
+    sistema = NotificacionAutomatizada()
     
     audio = MENSAJES_AUDIO.get(mensaje, MENSAJES_AUDIO['bienvenida'])
     
@@ -220,20 +217,24 @@ def enviar_notificacion_simple(numero: str, mensaje: str = 'bienvenida') -> Dict
     )
     
     return resultado
- 
- 
-if __name__ == "__main__":
+
+
+if _name_ == "_main_":
     print("="*70)
     print("SISTEMA DE NOTIFICACIONES AUTOMATIZADAS")
     print("Tigo Guatemala - CORE & VAP")
     print("="*70)
     print()
     
+    # Mostrar configuración
+    Config.display_config()
+    print()
+    
     print("EJEMPLO 1: Notificación simple")
     print("-" * 70)
     
     resultado = enviar_notificacion_simple(
-        numero='40008045',
+        numero=Config.ONCALL_PHONE_NUMBER,
         mensaje='bienvenida'
     )
     
