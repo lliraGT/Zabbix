@@ -1,11 +1,12 @@
-# vicente.rodriguez@millicom.com / Millicom TTC
-# Slack notification module
+# api/slack_notifier.py
+# Slack notification module with environment variables
 import requests
 import json
 from datetime import datetime
+from config import Config
 
-# Slack Webhook URL
-SLACK_WEBHOOK_URL = "https://hooks.slack.com/services/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"  # Slack webhook URL
+# Slack Webhook URL from environment
+SLACK_WEBHOOK_URL = Config.SLACK_WEBHOOK_URL
 
 def get_severity_color(severity):
     """Return color code based on severity"""
@@ -70,11 +71,11 @@ def send_slack_notification(event_id, hostname, visible_name, problem_name, seve
                             "fields": [
                                 {
                                     "type": "mrkdwn",
-                                    "text": f"*Problem:*\n{problem_name}"
+                                    "text": f"Problem:\n{problem_name}"
                                 },
                                 {
                                     "type": "mrkdwn",
-                                    "text": f"*Severity:*\n{severity}"
+                                    "text": f"Severity:\n{severity}"
                                 }
                             ]
                         },
@@ -83,11 +84,11 @@ def send_slack_notification(event_id, hostname, visible_name, problem_name, seve
                             "fields": [
                                 {
                                     "type": "mrkdwn",
-                                    "text": f"*Host:*\n{hostname}"
+                                    "text": f"Host:\n{hostname}"
                                 },
                                 {
                                     "type": "mrkdwn",
-                                    "text": f"*Visible Name:*\n{visible_name}"
+                                    "text": f"Visible Name:\n{visible_name}"
                                 }
                             ]
                         },
@@ -96,11 +97,11 @@ def send_slack_notification(event_id, hostname, visible_name, problem_name, seve
                             "fields": [
                                 {
                                     "type": "mrkdwn",
-                                    "text": f"*Group:*\n{group_name}"
+                                    "text": f"Group:\n{group_name}"
                                 },
                                 {
                                     "type": "mrkdwn",
-                                    "text": f"*Timestamp:*\n{timestamp_str}"
+                                    "text": f"Timestamp:\n{timestamp_str}"
                                 }
                             ]
                         },
@@ -109,7 +110,7 @@ def send_slack_notification(event_id, hostname, visible_name, problem_name, seve
                             "elements": [
                                 {
                                     "type": "mrkdwn",
-                                    "text": f"Event ID: `{event_id}` | Zabbix Monitor"
+                                    "text": f"Event ID: {event_id} | Zabbix Monitor"
                                 }
                             ]
                         }
@@ -161,7 +162,7 @@ def send_simple_slack_message(message):
         return False
 
 # Test function
-if __name__ == "__main__":
+if _name_ == "_main_":
     # Test with sample data
     send_slack_notification(
         event_id="12345",

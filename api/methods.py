@@ -1,17 +1,15 @@
-# vicente.rodriguez@millicom.com / Millicom TTC
-# Adapted for Slack integration
+# api/methods.py
+# Adapted for Slack integration with environment variables
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import requests
 import json
+from config import Config
 
-# Zabbix API Configuration
-ZABBIX_API_URL = "https://172.22.137.204:31080/api_jsonrpc.php"
-API_TOKEN = "f299a2249a54dbe788431ba07f103cd114a317315af4376af66b60518fc586db"
-
-# Authenticate to Zabbix API
+# Zabbix API Configuration from environment
+ZABBIX_API_URL = Config.ZABBIX_API_URL
+API_TOKEN = Config.ZABBIX_API_TOKEN
 AUTHTOKEN = API_TOKEN
-# Autenticación con API Token Completada
 
 def get_triggers_in_problems():
     """Get active triggers (problems) from Zabbix"""
@@ -55,8 +53,6 @@ def get_all_problems():
 
 def get_problem(eventid):
     """Get specific problem by event ID"""
-    print(type(eventid))
-    print(eventid)
     problems = requests.post(ZABBIX_API_URL, verify=False,
     json={
         "jsonrpc": "2.0",
@@ -105,11 +101,6 @@ def get_groups(hostid):
     })
     return groups.json()["result"]
 
-# ============================================================================
-# FUNCIONES PARA FILTRO POR TAG notification=Slack
-# Agregadas: 2025-11-06
-# ============================================================================
-
 def get_event_tags(eventid):
     """
     Obtiene los tags asociados a un evento específico
@@ -117,7 +108,6 @@ def get_event_tags(eventid):
         eventid: ID del evento de Zabbix
     Returns:
         Lista de diccionarios con los tags del evento
-        Ejemplo: [{'tag': 'notification', 'value': 'Slack'}, ...]
     """
     events = requests.post(ZABBIX_API_URL, verify=False,
         json={
@@ -156,4 +146,3 @@ def has_slack_notification_tag(eventid):
             return True
     
     return False
-
