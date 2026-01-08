@@ -1,5 +1,10 @@
 # api/slack_notifier.py
 # Slack notification module with environment variables
+import sys
+import os
+# Agregar directorio padre al path para importar config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import requests
 import json
 from datetime import datetime
@@ -162,7 +167,7 @@ def send_simple_slack_message(message):
         return False
 
 # Test function
-if _name_ == "_main_":
+if __name__ == "__main__":
     # Test with sample data
     send_slack_notification(
         event_id="12345",

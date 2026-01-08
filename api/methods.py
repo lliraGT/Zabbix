@@ -1,5 +1,10 @@
 # api/methods.py
 # Adapted for Slack integration with environment variables
+import sys
+import os
+# Agregar directorio padre al path para importar config
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 import requests
