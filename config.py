@@ -1,50 +1,51 @@
 # config.py
-# Configuración centralizada usando variables de entorno
-
-import os
-from pathlib import Path
-from dotenv import load_dotenv
-
-# Cargar variables de entorno desde archivo .env
-env_path = Path('.') / '.env'
-load_dotenv(dotenv_path=env_path)
+# Configuración centralizada - HARDCODED (sin .env por restricciones del servidor)
 
 class Config:
     """Clase para manejar configuración del sistema"""
-    
+
     # ========================================================================
     # ZABBIX CONFIGURATION
     # ========================================================================
-    ZABBIX_API_URL = os.getenv('ZABBIX_API_URL')
-    ZABBIX_API_TOKEN = os.getenv('ZABBIX_API_TOKEN')
-    
+    ZABBIX_API_URL = 'https://172.22.137.204:31080/api_jsonrpc.php'
+    ZABBIX_API_TOKEN = 'f299a2249a54dbe788431ba07f103cd114a317315af4376af66b60518fc586db'
+
     # ========================================================================
     # SLACK CONFIGURATION
     # ========================================================================
-    SLACK_WEBHOOK_URL = os.getenv('SLACK_WEBHOOK_URL')
-    
+    SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
+
     # ========================================================================
     # ASTERISK CONFIGURATION
     # ========================================================================
-    ASTERISK_HOST = os.getenv('ASTERISK_HOST')
-    ASTERISK_PORT = int(os.getenv('ASTERISK_PORT', 5038))
-    ASTERISK_AMI_USERNAME = os.getenv('ASTERISK_AMI_USERNAME')
-    ASTERISK_AMI_PASSWORD = os.getenv('ASTERISK_AMI_PASSWORD')
-    ASTERISK_CALLER_ID = os.getenv('ASTERISK_CALLER_ID', '23073500')
-    
+    ASTERISK_HOST = '172.22.57.75'
+    ASTERISK_PORT = 5038
+    ASTERISK_AMI_USERNAME = 'api_user'
+    ASTERISK_AMI_PASSWORD = 'T!G0_T00lsGT#9012'
+    ASTERISK_CALLER_ID = '23073500'
+
     # ========================================================================
     # PHONE NOTIFICATION CONFIGURATION
     # ========================================================================
-    ONCALL_PHONE_NUMBER = os.getenv('ONCALL_PHONE_NUMBER')
-    
+    ONCALL_PHONE_NUMBER = '40008045'
+
+    # ========================================================================
+    # ORACLE TURNOS CONFIGURATION
+    # ========================================================================
+    #ORACLE_DSN = '172.22.71.131:1521/vapstatd'
+    ORACLE_DSN = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.22.71.131)(PORT=1521))(CONNECT_DATA=(SID=vapstatd)))'
+    ORACLE_USER = 'prepago'
+    ORACLE_PASSWORD = 'Bre_7P6h0oAW2X1H'
+    USE_TURNOS = True  # Cambiar a True cuando esté listo
+
     # ========================================================================
     # MONITORING CONFIGURATION
     # ========================================================================
-    POLL_INTERVAL = int(os.getenv('POLL_INTERVAL_SECONDS', 60))
-    PROBLEM_LOOKBACK_DAYS = int(os.getenv('PROBLEM_LOOKBACK_DAYS', 10))
-    STATE_FILE = os.getenv('STATE_FILE_PATH', 'notified_events.json')
-    LOG_FILE = os.getenv('LOG_FILE_PATH', 'monitor_integrated.log')
-    
+    POLL_INTERVAL = 60
+    PROBLEM_LOOKBACK_DAYS = 10
+    STATE_FILE = 'notified_events.json'
+    LOG_FILE = 'monitor_integrated.log'
+
     # ========================================================================
     # SEVERITY MAPPING
     # ========================================================================
@@ -53,7 +54,7 @@ class Config:
         4: 'Critical',
         5: 'Critical'
     }
-    
+
     @classmethod
     def validate(cls):
         """Validar que todas las configuraciones requeridas estén presentes"""
@@ -66,17 +67,25 @@ class Config:
             'ASTERISK_AMI_PASSWORD': cls.ASTERISK_AMI_PASSWORD,
             'ONCALL_PHONE_NUMBER': cls.ONCALL_PHONE_NUMBER,
         }
-        
+
+        # Si USE_TURNOS está activado, validar variables Oracle
+        if cls.USE_TURNOS:
+            required_vars.update({
+                'ORACLE_DSN': cls.ORACLE_DSN,
+                'ORACLE_USER': cls.ORACLE_USER,
+                'ORACLE_PASSWORD': cls.ORACLE_PASSWORD,
+            })
+
         missing_vars = [var for var, value in required_vars.items() if not value]
-        
+
         if missing_vars:
             raise ValueError(
                 f"Faltan las siguientes variables de entorno requeridas: {', '.join(missing_vars)}\n"
-                f"Por favor verifica tu archivo .env"
+                f"Por favor verifica la configuración en config.py"
             )
-        
+
         return True
-    
+
     @classmethod
     def display_config(cls):
         """Mostrar configuración actual (ocultando secretos)"""
@@ -87,7 +96,7 @@ class Config:
             if len(value) <= show_chars:
                 return "*" * len(value)
             return "*" * (len(value) - show_chars) + value[-show_chars:]
-        
+
         print("=" * 70)
         print("CONFIGURACIÓN DEL SISTEMA")
         print("=" * 70)
@@ -101,6 +110,12 @@ class Config:
         print(f"On-Call Phone: {cls.ONCALL_PHONE_NUMBER}")
         print(f"Poll Interval: {cls.POLL_INTERVAL} segundos")
         print(f"Lookback Days: {cls.PROBLEM_LOOKBACK_DAYS} días")
+        print("-" * 70)
+        print(f"Sistema de Turnos: {'✓ ACTIVADO' if cls.USE_TURNOS else '✗ DESACTIVADO'}")
+        if cls.USE_TURNOS:
+            print(f"Oracle DSN: {cls.ORACLE_DSN}")
+            print(f"Oracle User: {cls.ORACLE_USER}")
+            print(f"Oracle Password: {mask_secret(cls.ORACLE_PASSWORD)}")
         print("=" * 70)
 
 
