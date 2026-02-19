@@ -16,5 +16,5 @@ for problem in dic_problems:
         if not has_slack_notification_tag(eventid):
             # Skip este problema si no tiene el tag
             continue
-            
+
         print(problem)

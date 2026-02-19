@@ -16,7 +16,7 @@ try:
     dic_problems = get_all_problems()
     for problem in dic_problems:
         if problem['r_clock'] == '0':  # without recovery
-        
+
             # FILTRO: Verificar tag notification=Slack
             eventid = problem['eventid']
             if not has_slack_notification_tag(eventid):

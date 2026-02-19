@@ -126,7 +126,7 @@ def get_event_tags(eventid):
             "auth": AUTHTOKEN,
             "id": 1
         })
-    
+
     try:
         result = events.json()["result"]
         if result and len(result) > 0:
@@ -145,9 +145,35 @@ def has_slack_notification_tag(eventid):
         True si tiene el tag notification=Slack, False en caso contrario
     """
     tags = get_event_tags(eventid)
-    
+
     for tag in tags:
         if tag.get("tag", "").lower() == "notification" and tag.get("value", "").lower() == "slack":
             return True
-    
+
     return False
+
+def get_encargado_tag(eventid):
+    """
+    Obtiene el valor del tag 'Encargado' de un evento
+    Args:
+        eventid: ID del evento de Zabbix
+    Returns:
+        Username del encargado o None si no existe el tag
+    """
+    tags = get_event_tags(eventid)
+
+    for tag in tags:
+        if tag.get("tag", "").lower() == "encargado":
+            return tag.get("value", "").strip()
+
+    return None
+
+
+def get_telefono_por_username(username):
+    """
+    Obtiene el teléfono de un usuario desde TFSS_COREVAP_USERS
+    Nota: Esta función requiere conexión Oracle, se implementará en turnos_oracle.py
+    """
+    # Esta es solo una función placeholder
+    # La implementación real está en TurnosOracle.get_telefono_por_username()
+    pass

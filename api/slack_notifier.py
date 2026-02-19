@@ -36,7 +36,7 @@ def get_severity_emoji(severity):
 def send_slack_notification(event_id, hostname, visible_name, problem_name, severity, timestamp, group_name):
     """
     Send formatted notification to Slack using Block Kit
-    
+
     Parameters:
     - event_id: Zabbix event ID
     - hostname: Technical hostname
@@ -46,17 +46,17 @@ def send_slack_notification(event_id, hostname, visible_name, problem_name, seve
     - timestamp: When the problem occurred
     - group_name: Host group name
     """
-    
+
     try:
         color = get_severity_color(severity)
         emoji = get_severity_emoji(severity)
-        
+
         # Format timestamp
         if isinstance(timestamp, str):
             timestamp_str = timestamp
         else:
             timestamp_str = timestamp.strftime("%Y-%m-%d %H:%M:%S")
-        
+
         # Prepare the message payload with Block Kit
         payload = {
             "attachments": [
@@ -123,21 +123,21 @@ def send_slack_notification(event_id, hostname, visible_name, problem_name, seve
                 }
             ]
         }
-        
+
         # Send POST request to Slack webhook
         response = requests.post(
             SLACK_WEBHOOK_URL,
             data=json.dumps(payload),
             headers={'Content-Type': 'application/json'}
         )
-        
+
         if response.status_code == 200:
             print(f"[{datetime.now()}] Slack notification sent successfully for event {event_id}")
             return True
         else:
             print(f"[{datetime.now()}] Failed to send Slack notification. Status: {response.status_code}, Response: {response.text}")
             return False
-            
+
     except Exception as e:
         print(f"[{datetime.now()}] Error sending Slack notification: {str(e)}")
         return False
@@ -145,7 +145,7 @@ def send_slack_notification(event_id, hostname, visible_name, problem_name, seve
 def send_simple_slack_message(message):
     """
     Send a simple text message to Slack
-    
+
     Parameters:
     - message: Text message to send
     """
@@ -153,15 +153,15 @@ def send_simple_slack_message(message):
         payload = {
             "text": message
         }
-        
+
         response = requests.post(
             SLACK_WEBHOOK_URL,
             data=json.dumps(payload),
             headers={'Content-Type': 'application/json'}
         )
-        
+
         return response.status_code == 200
-        
+
     except Exception as e:
         print(f"[{datetime.now()}] Error sending simple Slack message: {str(e)}")
         return False
